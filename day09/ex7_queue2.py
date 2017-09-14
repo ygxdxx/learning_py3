@@ -11,6 +11,7 @@ class Job(object):
         self.description = description
         print('current job is %s, priority is %s' % (self.description, self.priority))
 
+    # 对当前对象进行比较排序
     def __cmp__(self, other):
         return 1
 

@@ -20,16 +20,17 @@ import time
 
 def func(t_name, signal_e):
     print('I am %s,I will sleep...' % t_name)
-    # 进入等待状态
+    # 3. 判断是否要进入等待状态
     signal_e.wait()
     print('I am %s,I awake...' % t_name)
 
 
 if __name__ == '__main__':
-    # 获取event
+    # 1.获取event
     signal = threading.Event()
     thread_objs = []
     for i in range(3):
+        # 2. 当作参数传入到线程单重
         t = threading.Thread(target=func, args=('thread_%s' % i, signal))
         thread_objs.append(t)
     for t in thread_objs:
@@ -40,10 +41,10 @@ if __name__ == '__main__':
 
     inp = input('continue sleep? y/n:\n')
     if inp == 'y':
-        # 唤醒所有阻塞线程
+        # 4.1 设置Flag为true，唤醒所有阻塞线程
         signal.set()
     elif inp == 'n':
-        # 让所有线程继续阻塞
+        # 4.2 设置Flag为False，让所有线程继续阻塞
         signal.clear()
         print('sleep 2 seconds more...')
         time.sleep(2)
