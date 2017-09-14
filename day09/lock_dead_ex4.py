@@ -3,16 +3,28 @@
 import threading
 import time
 
+# 死锁
 num1, num2 = 0, 0
-lock = threading.Lock()
+# 递归锁
+lock = threading.RLock()
 
 
 def func1():
-    pass
+    print('grab the first part data')
+    lock.acquire()
+    global num1
+    num1 += 1
+    lock.release()
+    return num1
 
 
 def func2():
-    pass
+    print('grab the second part data')
+    lock.acquire()
+    global num2
+    num2 += 1
+    lock.release()
+    return num2
 
 
 def func3():
