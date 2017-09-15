@@ -8,7 +8,7 @@ q = queue.Queue()
 event = threading.Event()
 
 
-def producer(p_name, signal):
+def producer(p_name):
     count = 1
     while True:
         # time.sleep(0.3)
@@ -18,7 +18,7 @@ def producer(p_name, signal):
         count += 1
 
 
-def consumer(c_name, signal):
+def consumer(c_name):
     # while not q.empty():
     while True:
         # time.sleep(0.1)
@@ -28,8 +28,8 @@ def consumer(c_name, signal):
 
 
 # 创建两个线程对象
-p_thread = threading.Thread(target=producer, args=('生产者', event))
-c_thread = threading.Thread(target=consumer, args=('消费者', event))
+p_thread = threading.Thread(target=producer, args=('生产者',))
+c_thread = threading.Thread(target=consumer, args=('消费者', ))
 
 # 开启两个线程
 c_thread.start()
