@@ -14,10 +14,10 @@ channel = connection.channel()
 channel.queue_declare(queue='hello')
 
 # 4.queue的名字必须通过routing_key参数进行制定
-# 通过channel发送的数据并不会直接到达之前的queue中，而是**必须**先通过rabbitMQ的数据交换环节，即exchange
-channel.basic_publish(exchange='', routing_key='hello', body='Hello World!')
-
-print('[x] Sent Hello World!')
+# 通过channel发送的数据并不会直接到达之前的queue中，而是**必须**先通过rabbitMQ的数据交换环节，即exchange。然后接收方才能从queue中进行获取
+# 此处就是将queue和exchange绑定到一起
+channel.basic_publish(exchange='', routing_key='hello', body='Hello World')
+print('[x] Sent Hello World to receive!')
 
 # 5.我们必须要去人缓冲区已经flushes，我们发送回的消息才真的得到的发送，close可以完成这个目的
 connection.close()
