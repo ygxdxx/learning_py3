@@ -30,7 +30,7 @@ class User(Base):
 Base.metadata.create_all(engine)
 
 # TODO 插入数据
-# 创建与数据库会话的session类
+# 首先创建与数据库会话的session类，参数中需要绑定engine引擎 相当于cursor
 Session_clz = sessionmaker(bind=engine)
 # 创建session类相应的实例
 session = Session_clz()
@@ -56,8 +56,15 @@ session.commit()
 # 多条件查询就使用多个filter方法进行组合
 # data = session.query(User).filter_by(name='xiaoming').all()
 data = session.query(User).filter(User.id > 2).filter(User.id < 3).all()
-print(data[0])
+# print(data[0])
 
 # TODO 修改
-data[0].name = 'xiaobai'
-session.commit()
+# 直接对属性赋值即可
+# data[0].name = 'xiaobai'
+# session.commit()
+
+# TODO 统计和分组
+# 1.统计使用count()函数
+# 2.分组使用group_by()函数
+# 可以在filter()函数中使用like()函数进行模糊匹配
+print(session.query(User).filter(User.id > 2).count())
