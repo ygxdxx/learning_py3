@@ -2,7 +2,7 @@
 
 import pymysql
 
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123', db='web_db')
+conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123', db='web_db', echo='True')
 
 # 获取游标
 cursor = conn.cursor()
@@ -18,7 +18,7 @@ data = [('xiaogang', 66), ('xiaohei', 55)]
 # 插入多条数据
 cursor.executemany('INSERT INTO stu(username,age)VALUES(%s,%s)', data)
 
-# 默认开启了事物，最后需要进行提交
+# TODO 默认开启了事物，最后需要进行提交
 conn.commit()
 
 # 获取所有条目
@@ -26,6 +26,5 @@ print(cursor.fetchall())
 
 # 获取前三条数据
 print(cursor.fetchmany(3))
-
 
 cursor.close()
