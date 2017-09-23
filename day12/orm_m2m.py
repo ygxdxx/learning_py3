@@ -15,7 +15,7 @@ class Book(Base_clz):
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
     pub_date = Column(DATE)
-    authors = relationship('Author', secondary=Book2author(), backref='books')
+    authors = relationship('Author', secondary='book_2_author', backref='books')
 
     def __repr__(self):
         return self.name
@@ -35,8 +35,11 @@ class Book2author(Base_clz):
     关联表
     """
     __tablename__ = 'book_2_author'
-    book_id = Column(Integer, ForeignKey('books.id'))
-    author_id = Column(Integer, ForeignKey('authors.id'))
+    book_id = Column(Integer, ForeignKey('books.id'), primary_key=True)
+    author_id = Column(Integer, ForeignKey('authors.id'), primary_key=True)
 
     def __repr__(self):
         pass
+
+
+Base_clz.metadata.create_all(engine)
