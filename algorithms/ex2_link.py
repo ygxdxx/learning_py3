@@ -13,16 +13,15 @@ class SingleLink(object):
     """单链表"""
 
     def __init__(self, item=None):
-        self._head = item
+        self.__head = item
 
     def is_empty(self):
         """判断链表是否为空"""
-        # 判断头节点是否为空
-        return self._head is None
+        return self.__head is None
 
     def length(self):
         """返回链表长度"""
-        cur = self._head
+        cur = self.__head
         count = 0
         while cur is not None:
             count += 1
@@ -31,38 +30,71 @@ class SingleLink(object):
 
     def travel(self):
         """遍历链表"""
-        cur = self._head
+        cur = self.__head
         while cur is not None:
-            print(cur.elem)
+            print(cur.elem, end=' ')
             cur = cur.nxt
 
-    def add(self, item):
+    def add(self, data):
         """在链表头部添加节点"""
-        pass
+        node = Node(data)
+        node.nxt = self.__head
+        self.__head = node
 
-    def append(self, item):
+    def append(self, data):
         """在链表的尾部添加"""
-        # 创建新的节点
-        node = Node(item)
+        node = Node(data)
         if self.is_empty():
-            self._head = node
+            self.__head = node
         else:
-            cur = self._head
+            cur = self.__head
             while cur.nxt is not None:
                 cur = cur.nxt
             cur.nxt = node
 
-    def insert(self, pos, item):
-        """在指定位置添加"""
-        pass
+    def insert(self, pos, data):
+        """
+        在指定位置添加
+        :param data: 插入的数据
+        :param pos: 从0开始
+        """
+        if pos <= 0:
+            self.add(data)
+        elif pos > self.length() - 1:
+            self.append(data)
+        else:
+            count = 0
+            prev = self.__head
+            node = Node(data)
+            while count < pos:
+                prev = prev.nxt
+                count += 1
+            node.nxt = prev.nxt
+            prev.nxt = node
 
-    def remove(self, item):
+    def remove(self, data):
         """删除指定元素"""
-        pass
+        prev = None
+        cur = self.__head
+        while cur is not None:
+            if data == cur.elem:
+                if cur == self.__head:
+                    self.__head = cur.nxt
+                else:
+                    prev.nxt = cur.nxt
+            else:
+                prev = cur
+                cur = cur.nxt
 
-    def search(self, item):
+    def search(self, data):
         """判断元素是否存在"""
-        pass
+        cur = self.__head
+        while cur is not None:
+            if data == cur.elem:
+                return True
+            else:
+                cur = cur.nxt
+        return False
 
 
 if __name__ == '__main__':
@@ -74,13 +106,12 @@ if __name__ == '__main__':
     ll.append('hello')
     print(ll.length())
     print(ll.is_empty())
-    ll.append('hello')
-    ll.append('hello')
-    ll.append('hello')
-    ll.append('hello')
-    ll.append('hello')
-    ll.append('hello')
+    ll.append('1')
+    ll.append('2')
+    ll.append('3')
+    ll.append('4')
+    ll.append('5')
+    ll.append('6')
+    ll.add('100')
 
-    print(ll.length())
-    print(ll.is_empty())
     ll.travel()
