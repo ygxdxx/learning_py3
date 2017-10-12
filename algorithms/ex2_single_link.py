@@ -66,7 +66,7 @@ class SingleLink(object):
             count = 0
             prev = self.__head
             node = Node(data)
-            while count < pos:
+            while count < pos - 1:
                 prev = prev.nxt
                 count += 1
             node.nxt = prev.nxt
@@ -82,6 +82,7 @@ class SingleLink(object):
                     self.__head = cur.nxt
                 else:
                     prev.nxt = cur.nxt
+                break
             else:
                 prev = cur
                 cur = cur.nxt
@@ -103,7 +104,7 @@ if __name__ == '__main__':
     print(ll.is_empty())
 
     # 追加元素
-    ll.append('hello')
+    ll.append('0')
     print(ll.length())
     print(ll.is_empty())
     ll.append('1')
@@ -112,6 +113,7 @@ if __name__ == '__main__':
     ll.append('4')
     ll.append('5')
     ll.append('6')
-    ll.add('100')
+    ll.insert(2, '101')
+    ll.remove('2')
 
     ll.travel()
