@@ -1,0 +1,104 @@
+#! python3
+
+
+class Node(object):
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+
+class SingleCycleLink(object):
+    """单链表"""
+
+    def __init__(self, node=None):
+        self.__head = node
+        # 头节点存在则进行连接
+        if node:
+            node.nxt = node
+
+    def is_empty(self):
+        """判断链表是否为空"""
+        return self.__head is None
+
+    def length(self):
+        """返回链表长度"""
+        cur = self.__head
+        count = 0
+        while cur.nxt is not self.__head:
+            count += 1
+            cur = cur.nxt
+        return count
+
+    def travel(self):
+        """遍历链表"""
+        # 链表为空的情况
+        if self.is_empty():
+            return None
+        cur = self.__head
+        while cur.nxt is not self.__head:
+            print(cur.elem, end=' ')
+            cur = cur.nxt
+        # 每次next最后会少计算一个尾节，因此 退出循环的时候需要打印一下尾节点的元素
+        print(cur.elem)
+
+    def add(self, data):
+        """在链表头部添加节点"""
+        node = Node(data)
+        node.nxt = self.__head
+        self.__head = node
+
+    def append(self, data):
+        """在链表的尾部添加"""
+        node = Node(data)
+        if self.is_empty():
+            self.__head = node
+        else:
+            cur = self.__head
+            while cur.nxt is not None:
+                cur = cur.nxt
+            cur.nxt = node
+
+    def insert(self, pos, data):
+        """
+        在指定位置添加
+        :param data: 插入的数据
+        :param pos: 从0开始
+        """
+        if pos <= 0:
+            self.add(data)
+        elif pos > self.length() - 1:
+            self.append(data)
+        else:
+            count = 0
+            prev = self.__head
+            node = Node(data)
+            while count < pos - 1:
+                prev = prev.nxt
+                count += 1
+            node.nxt = prev.nxt
+            prev.nxt = node
+
+    def remove(self, data):
+        """删除指定元素"""
+        prev = None
+        cur = self.__head
+        while cur is not None:
+            if data == cur.elem:
+                if cur == self.__head:
+                    self.__head = cur.nxt
+                else:
+                    prev.nxt = cur.nxt
+                break
+            else:
+                prev = cur
+                cur = cur.nxt
+
+    def search(self, data):
+        """判断元素是否存在"""
+        cur = self.__head
+        while cur is not None:
+            if data == cur.elem:
+                return True
+            else:
+                cur = cur.nxt
+        return False

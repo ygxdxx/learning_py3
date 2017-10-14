@@ -1,6 +1,7 @@
 #! python3
 
 
+
 class Node(object):
     """数据节点ADT"""
 
@@ -22,8 +23,12 @@ class DouleLink(object):
 
     def length(self):
         """返回链表长度"""
+        # 因为从 1 开始计数 所以需要先判断是否为空
+        if self.is_empty():
+            return 0
         cur = self.__head
-        count = 0
+        # 从 1 开始计数
+        count = 1
         while cur is not None:
             cur = cur.next
             count += 1
