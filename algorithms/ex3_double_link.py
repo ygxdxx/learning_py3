@@ -1,7 +1,6 @@
 #! python3
 
 
-
 class Node(object):
     """数据节点ADT"""
 

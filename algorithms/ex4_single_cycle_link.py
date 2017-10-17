@@ -44,19 +44,29 @@ class SingleCycleLink(object):
     def add(self, data):
         """在链表头部添加节点"""
         node = Node(data)
-        node.nxt = self.__head
-        self.__head = node
+        cur = self.__head
+        if self.is_empty():
+            self.__head = node
+            node.next = node
+        else:
+            while cur.next != self.__head:
+                cur = cur.next
+            node.next = self.__head
+            self.__head = node
+            cur.next = self.__head
 
     def append(self, data):
         """在链表的尾部添加"""
         node = Node(data)
+        cur = self.__head
         if self.is_empty():
             self.__head = node
+            node.next = node
         else:
-            cur = self.__head
-            while cur.nxt is not None:
-                cur = cur.nxt
-            cur.nxt = node
+            while cur.next is not self.__head:
+                cur = cur.next
+            cur.next = node
+            node.next = self.__head
 
     def insert(self, pos, data):
         """
@@ -80,25 +90,47 @@ class SingleCycleLink(object):
 
     def remove(self, data):
         """删除指定元素"""
+        # 空列表
+        if self.is_empty():
+            return
         prev = None
         cur = self.__head
-        while cur is not None:
-            if data == cur.elem:
+        while cur.next is not self.__head:
+            if data == cur.data:
                 if cur == self.__head:
+                    # 头节点
+                    tail = self.__head
+                    while tail.next is not self.__head:
+                        tail = tail.next
                     self.__head = cur.nxt
+                    tail.next = self.__head
                 else:
+                    # 中间节点
                     prev.nxt = cur.nxt
                 break
             else:
                 prev = cur
                 cur = cur.nxt
+        # 尾节点
+        if cur.data == data:
+            # 只有一个节点
+            if cur == self.__head:
+                self.__head = None
+            else:
+                prev.next = cur.next
 
     def search(self, data):
         """判断元素是否存在"""
         cur = self.__head
-        while cur is not None:
-            if data == cur.elem:
+        # 先判断是否为空
+        if self.is_empty():
+            return False
+        while cur.next is not self.__head:
+            if cur.data == data:
                 return True
             else:
                 cur = cur.nxt
+        # 退出循环时候处于最后一个节点
+        if cur.data == data:
+            return True
         return False
