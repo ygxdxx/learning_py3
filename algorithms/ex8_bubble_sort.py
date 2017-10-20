@@ -30,7 +30,7 @@ def bubble_sort_imp(lst):
 
 
 if __name__ == '__main__':
-    data = [3, 1, 5, 4, 2]
+    data = [0, 3, 1, 5, 4, 2]
     print(data)
     bubble_sort(data)
     print(data)
