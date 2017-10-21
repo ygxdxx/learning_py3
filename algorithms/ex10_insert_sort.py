@@ -14,9 +14,6 @@ def insert_sort(lst):
 
 if __name__ == '__main__':
     data = [17, 20, 93, 54, 77, 31, 44, 54, 226]
-    # print(data)
-    # insert_sort(data)
-    # print(data)
-    s = 'abcde'
-    arr = s.split()
-    print(len(arr))
+    print(data)
+    insert_sort(data)
+    print(data)
